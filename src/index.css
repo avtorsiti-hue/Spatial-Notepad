@@ -1,0 +1,303 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  :root {
+    --accent-color: #3b82f6;
+    --accent-glow: rgba(59, 130, 246, 0.5);
+    --accent-glow-subtle: rgba(59, 130, 246, 0.2);
+    --panel-bg: rgba(24, 24, 27, 0.8);
+    --text-color: #f4f4f5;
+    --border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  body {
+    @apply bg-zinc-950 text-zinc-100 font-sans overflow-hidden;
+    color: var(--text-color);
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    background-color: var(--panel-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    @apply shadow-xl;
+  }
+  
+  .glass-node {
+    background-color: var(--panel-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    @apply shadow-lg transition-shadow duration-300;
+  }
+  
+  .glass-node:hover {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 20px var(--accent-glow-subtle);
+  }
+
+  .glass-input {
+    @apply bg-black/20 rounded-lg px-3 py-2 focus:outline-none transition-colors;
+    border: 1px solid var(--border-color);
+  }
+  
+  .glass-input:focus {
+    border-color: var(--accent-color);
+  }
+
+  .eclipse-glow {
+    box-shadow: 0 0 20px 2px var(--accent-glow), 0 0 40px 5px var(--accent-glow-subtle);
+  }
+
+  .eclipse-glow-white {
+    box-shadow: 0 0 20px 2px rgba(255, 255, 255, 0.4), 0 0 40px 5px rgba(255, 255, 255, 0.1);
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+    background-image: linear-gradient(to right, transparent 2.5px, rgba(255, 255, 255, 0.1) 2.5px, rgba(255, 255, 255, 0.1) 3.5px, transparent 3.5px);
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    border: 1px solid transparent;
+    background-clip: padding-box;
+  }
+
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #fff transparent;
+  }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
+
+/* Принудительно разрешаем инлайновые стили (цвет) внутри prose */
+.prose [style*="color"] {
+  color: revert-layer !important;
+}
+
+.prose span[style*="color"] {
+  color: inherit !important;
+  color: revert !important;
+}
+
+/* React Flow Customization */
+.react-flow__node {
+  border-radius: 12px;
+}
+
+.react-flow__handle {
+  width: 10px;
+  height: 10px;
+  background: #52525b; /* zinc-600 */
+  border: 2px solid #27272a; /* zinc-800 */
+  transition: all 0.3s ease;
+}
+
+.react-flow__handle:hover {
+  background: #fff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  transform: scale(1.2);
+}
+
+.react-flow__handle-connecting {
+  animation: pulse 1.5s infinite;
+  background: #3b82f6; /* blue-500 */
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(59, 130, 246, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+  }
+}
+
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(0.98); }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s ease-in-out infinite;
+}
+
+@keyframes blink-glow {
+  0%, 100% { opacity: 1; box-shadow: 0 0 15px 2px rgba(59, 130, 246, 0.6); transform: scale(1); }
+  50% { opacity: 0.8; box-shadow: 0 0 5px 0px rgba(59, 130, 246, 0.2); transform: scale(0.95); }
+}
+
+.animate-blink-glow {
+  animation: blink-glow 2s ease-in-out infinite;
+}
+
+/* Tiptap Editor Styles */
+.tiptap-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.tiptap-container .tiptap {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+}
+
+.tiptap p {
+  margin-top: 0.75em;
+  margin-bottom: 0.75em;
+}
+
+.tiptap p:first-child {
+  margin-top: 0;
+}
+
+.tiptap p:last-child {
+  margin-bottom: 0;
+}
+
+.tiptap p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #52525b;
+  pointer-events: none;
+  height: 0;
+}
+
+/* Custom Range Slider - 1px line and glowing circle */
+.custom-range {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  outline: none;
+  margin: 10px 0;
+}
+
+.custom-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  background: var(--accent-color);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 10px 2px var(--accent-glow), 0 0 20px 5px var(--accent-glow-subtle);
+  transition: all 0.2s ease;
+}
+
+.custom-range::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 15px 3px var(--accent-color), 0 0 25px 8px var(--accent-glow);
+}
+
+.custom-range::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  background: var(--accent-color);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 10px 2px var(--accent-glow), 0 0 20px 5px var(--accent-glow-subtle);
+  border: none;
+}
+
+/* Neon Scrollbar - 1px line and glowing circle */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  background-image: linear-gradient(to right, transparent 2.5px, rgba(255, 255, 255, 0.1) 2.5px, rgba(255, 255, 255, 0.1) 3.5px, transparent 3.5px);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
+}
+
+/* Ensure text wrapping and paragraph spacing in nodes */
+.prose {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  font-family: inherit;
+}
+
+.prose p {
+  margin-top: 0.75em !important;
+  margin-bottom: 0.75em !important;
+  line-height: 1.6;
+}
+
+.prose p:first-child {
+  margin-top: 0 !important;
+}
+
+.prose p:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* Стили для редактора (когда вы печатаете) */
+.tiptap ul {
+  list-style-type: disc !important;
+  padding-left: 1.5rem !important;
+  margin-left: 0.5rem;
+}
+
+.tiptap ol {
+  list-style-type: decimal !important;
+  padding-left: 1.5rem !important;
+  margin-left: 0.5rem;
+}
+
+/* Стили для режима просмотра (Markdown) */
+.prose ul {
+  list-style-type: disc !important;
+  padding-left: 1.5rem !important;
+}
+
+.prose ol {
+  list-style-type: decimal !important;
+  padding-left: 1.5rem !important;
+}
+
+.tiptap li, .prose li {
+  display: list-item !important; /* Принудительно включаем отображение как элемента списка */
+}
+

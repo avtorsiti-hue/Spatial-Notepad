@@ -1,0 +1,5 @@
+{
+  "name": "Spatial Notepad",
+  "description": "A minimalist, infinite canvas spatial notepad with glassmorphism design, Gemini AI integration, and offline capabilities.",
+  "requestFramePermissions": ["local-fonts"]
+}
