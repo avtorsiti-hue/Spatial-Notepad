@@ -4,15 +4,12 @@ import path from 'path';
 import {defineConfig} from 'vite';
 
 export default defineConfig({
-  // Укажи здесь точное название своего репозитория (как в URL)
-  base: '/spatial-notepad/', 
+  // Обязательно название твоего репозитория!
+  base: '/Spatial-Notepad/', 
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
-  },
-  server: {
-    hmr: process.env.DISABLE_HMR !== 'true',
   },
 });
